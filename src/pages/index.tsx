@@ -1,4 +1,5 @@
-import type { InferGetServerSidePropsType, GetServerSideProps ,GetServerSidePropsContext, NextPage } from 'next'
+import type { NextPage } from 'next'
+import Link from 'next/link'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
@@ -18,7 +19,6 @@ const Home: NextPage<PageWithAuthType> = ({ session }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-
       <main className={styles.main}>
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
@@ -28,6 +28,16 @@ const Home: NextPage<PageWithAuthType> = ({ session }) => {
           Get started by editing{' '}
           <code className={styles.code}>pages/index.tsx</code>
         </p>
+
+        <div>
+          <p>
+            <Link href="/testpage">
+              <span style={{ color: 'blue', fontWeight: 'bold' }}>
+                move to testpage
+              </span>
+            </Link>
+          </p>
+        </div>
 
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
