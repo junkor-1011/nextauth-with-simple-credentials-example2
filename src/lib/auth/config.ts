@@ -10,7 +10,7 @@ const authOptions: NextAuthOptions = {
       authorize: async (credentials, _req) => {
         // DANGER: 現状のauthorizeの中身は全面的に改める必要あり
         // →ここでは概要・実現性の確認さえ出来れば良いため、実用上必要な考慮や処理を省略したり、敢えてアンチパターンな処理を入れている
-        const allowdCredentials = { // UNSECURE CODE: JUST FOR TEST ONLY
+        const allowedCredentials = { // UNSECURE CODE: JUST FOR TEST ONLY
           'user': 'p@ssword',
           'dummy': ')-v-(',
           'pochi': 'Vow!',
@@ -21,8 +21,13 @@ const authOptions: NextAuthOptions = {
         const password = credentials?.password;
 
         // 認証に失敗した場合はnullを返す
-        if (!Object.keys(allowdCredentials).includes(username) || allowdCredentials[username] !== password)
+        if (!username || !Object.keys(allowedCredentials).includes(username))
           return null;
+        else {
+          const usernameTyped = username as keyof typeof allowedCredentials
+          if (allowedCredentials[usernameTyped] !== password)
+            return null;
+        }
 
         const { createHmac } = await import('node:crypto') // TMP
         const hmac = createHmac('sha256', username) // TMP

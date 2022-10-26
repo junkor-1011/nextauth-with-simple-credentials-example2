@@ -16,7 +16,7 @@ const SignIn: React.FC = () => (
   </div>
 )
 
-export const NeedAuthentication: React.FC<{ children: React.ReactNode; }> = ({ children }) => {
+export const NeedAuthentication: React.FC<React.PropsWithChildren> = ({ children }) => {
   const { status } = useSession();
 
   if (status === 'loading') return (
