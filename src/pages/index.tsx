@@ -2,39 +2,13 @@ import type { InferGetServerSidePropsType, GetServerSideProps ,GetServerSideProp
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import { getServerSidePropsWithAuth, PageWithAuthType } from '@/lib/next/get-page-props'
 
-import { getServerSession } from '@/lib/auth/server-session'
+import Header from '@/components/layout/Header'
 
+export const getServerSideProps = getServerSidePropsWithAuth
 
-
-// tmp
-// import { useSession } from 'next-auth/react'
-// import { unstable_getServerSession } from 'next-auth/next'
-import Header from '../components/layout/Header'
-
-
-
-export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
-  const session = await getServerSession(context);
-
-  if (!session) {
-    return {
-      // redirect: {
-      //   destination: '/',
-      //   permanent: false,
-      // },
-      props: {},
-    }
-  }
-
-  return {
-    props: {
-      session,
-    },
-  }
-}
-
-const Home: NextPage = ({ session }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Home: NextPage<PageWithAuthType> = ({ session }) => {
   return (
     <div className={styles.container}>
       <Header session={session} />
